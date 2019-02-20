@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 const todo = () => {
@@ -22,6 +22,17 @@ const todo = () => {
     document.addEventListener('mousemove', mousemoveHandler);
     return () => document.removeEventListener('mousemove', mousemoveHandler);
   });
+
+  const todoListReducer = (state, action) => {
+    switch (action.type) {
+      case 'ADD':
+      return state.concat(action.payload);
+    default:
+      return state;
+    }
+  };
+  // state here can replace todolist items
+  const [state, dispatch] = useReducer(todoListReducer, []);
 
   const inputChanger = (e) => {
     setTodo(e.target.value);
